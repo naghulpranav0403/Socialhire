@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url("C:\Users\91781\Pictures\loginpic.jpg") no-repeat center center fixed; 
+    background: url("https://png.pngtree.com/thumb_back/fh260/background/20200714/pngtree-modern-double-color-futuristic-neon-background-image_351866.jpg") no-repeat center center fixed; 
     background-size: cover;
 }
 
@@ -59,4 +59,24 @@
     margin: 0 auto 20px;
     width: 150px; 
     height: auto;
+}
+@media (max-width: 1200px) {
+    .nav-22{
+      margin-bottom: 190px;
+    }
+}
+@media (max-width: 992px) {
+    .nav-22{
+      margin-bottom: 180px;
+    }
+}
+@media (max-width: 768px) {
+    .nav-22{
+      margin-bottom: 190px;
+    }
+}
+@media (max-width: 576px) {
+    .nav-22{
+      margin-bottom: 190px;
+    }
 }

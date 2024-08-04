@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Login.css';
 import Socialhire from './Socialhire1.png';
+import Navigation from './Navigation';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -65,6 +66,10 @@ const Login = () => {
     };
 
     return (
+        <>
+    <div className="nav-22">
+    <Navigation/>
+      </div>
         <div className="login1">
             <form onSubmit={handleSubmit} className="login2">
                 <img src={Socialhire} alt="Logo" className="loginlogo" />
@@ -76,7 +81,7 @@ const Login = () => {
                         value={email} 
                         onChange={handleEmailChange} 
                         required 
-                    />
+                        />
                 </div>
                 <div className="login3">
                     <label>Password :</label>
@@ -85,7 +90,7 @@ const Login = () => {
                         value={password} 
                         onChange={handlePasswordChange} 
                         required 
-                    />
+                        />
                 </div>
                 <div className="forgotpassword1">
                     <Link to="/Forget">Forgot Password?</Link>
@@ -102,6 +107,7 @@ const Login = () => {
                 </div>
             </form>
         </div>
+                </>
     );
 };
 

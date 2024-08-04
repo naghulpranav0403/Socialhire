@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Signup.css';
 import {Link} from 'react-router-dom';
 import Socialhire from './Socialhire1.png';
+import Navigation from './Navigation';
 const Signup = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -65,6 +66,10 @@ const Signup = () => {
     };
 
     return (
+        <>
+      <div className="nav-22">
+    <Navigation/>
+      </div>
         <div className="signup1">
             <form onSubmit={handleSubmit} className="signup2">
             <img src={Socialhire}  className="signuplogo" />
@@ -85,7 +90,7 @@ const Signup = () => {
                         value={email} 
                         onChange={(e) => setEmail(e.target.value)} 
                         required 
-                    />
+                        />
                 </div>
                 <div className="group1">
                     <label><h4>Password :</h4></label>
@@ -103,7 +108,7 @@ const Signup = () => {
                         value={confirmPassword} 
                         onChange={(e) => setConfirmPassword(e.target.value)} 
                         required 
-                    />
+                        />
                 </div>
                 {isValid ? (
                     <Link to="/Home">
@@ -114,6 +119,7 @@ const Signup = () => {
                 )}
             </form>
         </div>
+                </>
     );
 };
 

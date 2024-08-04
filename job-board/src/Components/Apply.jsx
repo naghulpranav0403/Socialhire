@@ -16,6 +16,8 @@ const Apply = () => {
   };
 
   return (
+    <>
+    <div className="app1">
     <div className="apply-job">
       <div className="apply1">
         <form onSubmit={handleSubmit} className='apply3'>
@@ -34,7 +36,7 @@ const Apply = () => {
               placeholder="Enter Your Name"
               onChange={(e) => setName(e.target.value)}
               required
-            />
+              />
           </div>
           <div className='apply4'>
             <label htmlFor="myFile">
@@ -56,6 +58,8 @@ const Apply = () => {
         </form>
       </div>
     </div>
+    </div>
+              </>
   );
 }
 

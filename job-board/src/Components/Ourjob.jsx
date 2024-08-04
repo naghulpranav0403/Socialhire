@@ -56,6 +56,7 @@ const Ourjob = () => {
     <div className="nav-22">
     <Navigation/>
       </div>
+      
     <div className="job-page">
       <h1 className='title'>Jobs</h1>
       <div className="filters">
