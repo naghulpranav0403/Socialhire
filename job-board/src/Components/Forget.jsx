@@ -25,7 +25,7 @@ const Forget = () => {
                         onChange={(e) => setEmail(e.target.value)} 
                         required 
                     />
-                </div>
+                </div>  
                 <button className="forget4" type="submit">Send Reset Link</button>
                 {message && <p className="message">{message}</p>}
             </form>

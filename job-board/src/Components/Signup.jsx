@@ -105,7 +105,13 @@ const Signup = () => {
                         required 
                     />
                 </div>
-              
+                {isValid ? (
+                    <Link to="/Home">
+                        <button className="group2" type="submit">Signup</button>
+                    </Link>
+                ) : (
+                    <button className="group2" type="submit">Signup</button>
+                )}
             </form>
         </div>
     );

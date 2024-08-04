@@ -18,7 +18,7 @@
   
   }
   .logo4{
-    width: 130px;
+    width: 180px;
     align-items: center;
     justify-content: center;
     margin-left: 210px ;
@@ -96,20 +96,31 @@
   @media (max-width: 992px) {
     .nav-22{
       margin-bottom: 180px;
+    }.logo4{
+      margin-left: 190px;
     }
 }
 @media (max-width: 1200px) {
     .nav-22{
       margin-bottom: 190px;
     }
+    .logo4{
+      margin-left: 190px;
+    }
 }
 @media (max-width: 768px) {
     .nav-22{
       margin-bottom: 10px;
     }
+    .logo4{
+      margin-left: 190px;
+    }
 }
 @media (max-width: 576px) {
     .nav-22{
       margin-bottom: 190px;
+    }
+    .logo4{
+      margin-left: 90px;
     }
 }

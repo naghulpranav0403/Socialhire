@@ -60,3 +60,9 @@
     text-align: center;
     color: white;
 }
+.forgetlogo {
+    display: block;
+    margin: 0 auto 20px;
+    width: 150px; 
+    height: auto;
+}
