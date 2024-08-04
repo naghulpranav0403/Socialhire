@@ -1,30 +1,29 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import './Apply.css';
 import Socialhire from './Socialhire1.png';
+
 const Apply = () => {
   const [name, setName] = useState('');
-  const fileInputRef = useRef(null); 
+  const [file, setFile] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const fileName = fileInputRef.current?.files[0]?.name || 'No file uploaded';
+    const fileName = file?.name || 'No file uploaded';
     alert(`Application Submitted!\nName: ${name}\nResume Uploaded: ${fileName}`);
-   
-    setName(''); 
-    fileInputRef.current.value = '';
+
+    setName('');
+    setFile(null);
   };
 
   return (
     <div className="apply-job">
       <div className="apply1">
         <form onSubmit={handleSubmit} className='apply3'>
-        <header className="apply2">
-        <img src={Socialhire}  className="logo3" />
-    
-          
-        </header>
-          <div className="form-group">
-            <label className="ll"id="name-label" htmlFor="name">
+          <header className="apply2">
+            <img src={Socialhire} className="logo3" alt="Logo" />
+          </header>
+          <div className="apply4">
+            <label className="ll" id="name-label" htmlFor="name">
               Enter Your Name
             </label>
             <input
@@ -37,7 +36,7 @@ const Apply = () => {
               required
             />
           </div>
-          <div className='form-group'>
+          <div className='apply4'>
             <label htmlFor="myFile">
               Upload Your Resume
             </label>
@@ -45,19 +44,14 @@ const Apply = () => {
               type="file"
               id="myFile"
               name="filename"
-              ref={fileInputRef} 
+              onChange={(e) => setFile(e.target.files[0])}
               required
             />
           </div>
-          <div className="form-group">
-       
-        <button
-              type="submit"
-              className="submit-button1"
-              >
+          <div className="apply4">
+            <button type="submit" className="submit-button1">
               Submit
             </button>
-                 
           </div>
         </form>
       </div>

@@ -4,7 +4,7 @@
     align-items: center;
     flex-direction: column;
     width: 100%;
-    margin: 200px 0 0 0;
+    margin: 150px 0 0 0;
     text-align: justify;
 }
 
@@ -36,9 +36,10 @@ margin-bottom: 10px;
     width: 100%;
     margin-left: 5px;
 }
-.form-group1{
+.apply4{
+    display: grid ;
     padding: 15px;
-  background-color: rgba(211, 211, 211, 0.756);
+  background-color: rgba(211, 211, 211, 0);
 }
 .apply3{
     background-color: rgba(0, 255, 255, 0.407);
