@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import'./jobs.css'    
 import axios from 'axios';
 import Navigation from './Navigation';
-
 const Ourjob = () => {
   const [jobsData,setJobsData]=useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,7 +23,6 @@ const Ourjob = () => {
     };
     fetchPackages();
   }, []);
-
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -73,7 +71,7 @@ const Ourjob = () => {
           <option value="">All Categories</option>
           <option  value="Frontend" className= "vat-na">Frontend</option>
           <option value="Backend">Backend</option>
-          <option value="DigitalMarkting">Digital Marketing</option>
+          <option value="Digital Marketing">Digital Marketing</option>
           <option value="Devops">Devops</option>  
           <option value="Embedded System">Embedded System</option>  
           <option value=" CA">CA</option>  
