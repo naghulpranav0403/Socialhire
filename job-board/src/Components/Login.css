@@ -99,9 +99,9 @@
 }
 @media (max-width: 992px) {
     .nav-22{
-      margin-bottom: 180px;
+      margin-bottom: 0px;
     }
-}
+} 
 @media (max-width: 768px) {
     .nav-22{
       margin-bottom: 190px;
