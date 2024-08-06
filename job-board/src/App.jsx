@@ -1,6 +1,7 @@
 import './App.css';
 import Home from './Components/Home';
 import React,{useState} from 'react';
+import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Apply from './Components/Apply';
 import PostJob from './Components/Postjob';
@@ -12,7 +13,12 @@ import Signup from './Components/Signup';
 import Forget from './Components/Forget';
 import News from './Components/News';
 function App() {
-
+  ReactDOM.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
   return (
     <>
       {/* <BrowserRouter>
