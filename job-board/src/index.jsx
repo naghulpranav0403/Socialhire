@@ -10,11 +10,12 @@ import Navigation from './Components/Navigation';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
 import Forget from './Components/Forget';
+import News from './Components/News';
 function App() {
 
   return (
     <>
-      <BrowserRouter>
+      {/* <BrowserRouter>
         <Routes>
           <Route path="/">
             <Route index element={<Home />} />  
@@ -30,7 +31,8 @@ function App() {
        
            </Route>
         </Routes>
-      </BrowserRouter> 
+      </BrowserRouter>  */}
+      <News/>
     </>
   );
 }
