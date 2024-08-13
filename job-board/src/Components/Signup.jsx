@@ -14,7 +14,7 @@ const Signup = () => {
     confirmPassword: ''
   });
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate(); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,10 +47,9 @@ const Signup = () => {
 
     if (Object.keys(errors).length === 0) {
       try {
-        await axios.post('http://localhost:2005/api/register', formData);
-        alert(`Signup Successful!\nEmail: ${formData.email}`);
-        
-        navigate('/Login'); // Assuming the login page is at the root path
+        await axios.post('http://localhost:2005/api/register',formData);
+        alert(`Signup Successful!\nEmail: ${formData.email}`);       
+        navigate('/Login'); 
       } catch (error) {
         if (error.response && error.response.data) {
           const errorMessage = error.response.data.message;

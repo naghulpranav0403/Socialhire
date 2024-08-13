@@ -1,7 +1,8 @@
  const express = require('express');
  const mongoose = require('mongoose');
  const cors = require('cors');
- 
+ const bcrypt = require('bcryptjs')
+ const jwt = require('jsonwebtoken')
  const app = express();
  app.use(express.json())
  app.use(cors());
@@ -18,6 +19,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true }
 });
+
 const User = mongoose.model('User', userSchema);
 
 
@@ -66,12 +68,12 @@ app.post('/api/login', async (req, res) => {
     
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: 'User not found' });
+      return res.status(400).json({ message: 'User not found' }); // User not found
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' }); 
+      return res.status(400).json({ message: 'Invalid credentials' }); // Incorrect password
     }
 
     

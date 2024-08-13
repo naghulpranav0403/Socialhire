@@ -36,7 +36,6 @@ const Ourjob = () => {
         console.error('Failed to fetch saved jobs:', error);
       }
     };
-  
     fetchPostJobs();
   }, []); 
  
@@ -146,7 +145,7 @@ const Ourjob = () => {
 
         <Link to="/Apply">
       
-            <button className="apply-button">Apply Now</button>
+            <button className="apply-button"  onClick={() => handleApply(job)}>Apply Now</button>
         </Link>
         <Link to="/Savedjobs">
                   <button
