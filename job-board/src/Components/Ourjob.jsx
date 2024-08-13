@@ -9,6 +9,8 @@ const Ourjob = () => {
   const [category, setCategory] = useState('');
   const [experience, setExperience] = useState(''); 
   const [jobType,setJobType]= useState('');
+  const [postJobs, setPostJobs] = useState([]);
+  
   useEffect(() => {
     const fetchPackages = async () => {
       try {
@@ -23,6 +25,22 @@ const Ourjob = () => {
     };
     fetchPackages();
   }, []);
+ 
+  useEffect(() => {
+    const fetchPostJobs = async () => {
+      try {
+        const response1 = await axios.get('http://localhost:2005/post-jobs');
+        console.log('Fetched jobs:', response1.data);
+        setPostJobs(response1.data);
+      } catch (error) {
+        console.error('Failed to fetch saved jobs:', error);
+      }
+    };
+  
+    fetchPostJobs();
+  }, []); 
+ 
+
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -37,18 +55,26 @@ const Ourjob = () => {
   const handleJobTypeChange = (e) => {
    setJobType(e.target.value);
   };
- const handleSave = (job) => {
-   onSave(job);
- };
-  const filteredJobs = jobsData.filter(job => {
+  const handleSave = async (job) => {
+    try {
+      await axios.post('http://localhost:2005/save-job', job);
+   
+    } catch (error) {
+      console.error('Failed to save job:', error);
+    }
+  };
+  const allJobs = [...jobsData, ...postJobs];
+  const filteredJobs = allJobs.filter(job => {
     return (
-      job.POSITION &&
-      job.POSITION.toLowerCase().includes(searchTerm)  &&  
+     (job.POSITION &&
+      job.POSITION.toLowerCase().includes(searchTerm))||
+      (job.COMPANY&& job.COMPANY.toLowerCase().includes(searchTerm))  &&  
       (category === '' || job.ROLE === category) &&
       (experience === '' || job.EXPERIENCE === experience)&&
       (jobType === '' || job.JOBTYPE === jobType)
     );
   });
+  
   return (
     <>
     <div className="nav-22">
@@ -122,18 +148,20 @@ const Ourjob = () => {
       
             <button className="apply-button">Apply Now</button>
         </Link>
-        <Link
-                            to="/Savedjobs"
-                          >                <button 
-                          className='apply-button'
-                          onClick={() => handleSave(job)}
-                        >
-        Save</button> </Link>
+        <Link to="/Savedjobs">
+                  <button
+                    className="apply-button"
+                    onClick={() => handleSave(job)}
+                  >
+                  Bookmark
+                  </button>
+                </Link>
               </div>
               
           </div>
         ))}
       </div>
+     
     </div>
     </>
   );

@@ -1,7 +1,7 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 body{
   
-  font-family: Arial, sans-serif;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .job-page {
@@ -15,6 +15,7 @@ body{
 
 .title {
   display: flex;
+  font-family: lobster;
   justify-content: center;
   align-items: center;
   padding: 50px;
@@ -150,18 +151,18 @@ body{
 }
 
 @media (max-width: 1200px) {
-  .nav-22{
-    margin-bottom: 190px;
-  }
+  .job-page{
+    padding-top: 170px;
+   }
   .job-listings {
     width: calc(100% - 40px);
   }
 }
 
 @media (max-width: 992px) {
-  .nav-22{
-    margin-bottom: 180px;
-  }
+  .job-page{
+    padding-top: 50px;
+   }
   .title {
     padding: 30px;
   }
@@ -173,9 +174,9 @@ body{
 }
 
 @media (max-width: 768px) {
-  .nav-22{
-    margin-bottom: 190px;
-  }
+  .job-page{
+    padding-top: 210px;
+   }
   .filters {
     justify-content: center;
   }
@@ -195,9 +196,9 @@ body{
 }
 
 @media (max-width: 576px) {
-  .nav-22{
-    margin-bottom: 190px;
-  }
+  .job-page{
+    padding-top: 210px;
+   }
   .title {
     padding: 20px;
   }

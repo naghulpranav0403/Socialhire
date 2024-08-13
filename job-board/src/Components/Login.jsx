@@ -1,114 +1,121 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import './Login.css';
 import Socialhire from './Socialhire1.png';
 import Navigation from './Navigation';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isValid, setIsValid] = useState(false);
+const Login = ({ handleLogin }) => {
+  const navigate = useNavigate();
 
-    const validateEmail = (email) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email) ? '' : 'Please enter a valid email address.';
-    };
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({});
 
-    const validatePassword = (password) => {
-        const minLength = 8;
-        const hasNumber = /\d/;
-        const hasUpperCase = /[A-Z]/;
-        const hasLowerCase = /[a-z]/;
-        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+  useEffect(() => {
+    const storedEmail = localStorage.getItem('userEmail') || '';
+    const storedPassword = localStorage.getItem('userPassword') || '';
+    setEmail(storedEmail);
+    setPassword(storedPassword);
+  },[]);
 
-        if (password.length < minLength) {
-            return 'Password must be at least ${minLength} characters long.';
-        }
-        if (!hasNumber.test(password)) {
-            return 'Password must contain at least one number.';
-        }
-        if (!hasUpperCase.test(password)) {
-            return 'Password must contain at least one uppercase letter.';
-        }
-        if (!hasLowerCase.test(password)) {
-            return 'Password must contain at least one lowercase letter.';
-        }
-        if (!hasSpecialChar.test(password)) {
-            return 'Password must contain at least one special character.';
-        }
-        return '';
-    };
+  useEffect(() => {
+    localStorage.setItem('userEmail', email);
+  }, [email]);
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
+  useEffect(() => {
+    localStorage.setItem('userPassword', password);
+  }, [password]);
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const errors = {};
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const emailValidationError = validateEmail(email);
-        const passwordValidationError = validatePassword(password);
+    if (!email.trim() || !/\S+@\S+\.\S+/.test(email)) {
+      errors.email = 'Email is invalid';
+    }
+    
+    if (!password.trim() || password.trim().length < 6) {
+      errors.password = 'Password must be at least 6 characters long';
+    }
 
-        if (emailValidationError) {
-            alert(emailValidationError);
-        }
-        if (passwordValidationError) {
-            alert(passwordValidationError);
-        }
-        if (!emailValidationError && !passwordValidationError) {
-            setIsValid(true);
+    if (Object.keys(errors).length === 0) {
+      try {
+        const response = await axios.post('http://localhost:2005/api/login', { email, password });
+        alert('Login Successful!'); 
+        handleLogin(response.data.token); 
+      navigate('/Ourjob')
+      } catch (error) {
+        if (error.response) {
+          const message = error.response.data.message;
+          if (message === 'Invalid credentials') {
+            alert('Wrong password. Please try again.');
+          } else if (message === 'User not found') {
+            alert('User not registered. Please register first.'); 
+          } 
         } else {
-            setIsValid(false);
+          alert('Login failed. Please try again.'); 
         }
-    };
+      }
+    } else {
+      setErrors(errors);
+    }
+  };
 
-    return (
-        <>
+  return (
+    <>
     <div className="nav-22">
     <Navigation/>
       </div>
-        <div className="login1">
-            <form onSubmit={handleSubmit} className="login2">
-                <img src={Socialhire} alt="Logo" className="loginlogo" />
-                <h2>Login</h2>
-                <div className="login3">
-                    <label>Email :</label>
-                    <input 
-                        type="email" 
-                        value={email} 
-                        onChange={handleEmailChange} 
-                        required 
-                        />
-                </div>
-                <div className="login3">
-                    <label>Password :</label>
-                    <input 
-                        type="password" 
-                        value={password} 
-                        onChange={handlePasswordChange} 
-                        required 
-                        />
-                </div>
-                <div className="forgotpassword1">
-                    <Link to="/Forget">Forgot Password?</Link>
-                </div>
-                {isValid ? (
-                    <Link to="/Home">
-                        <button className="gro2" type="submit">Login</button>
-                    </Link>
-                ) : (
-                    <button className="gro2" type="submit">Login</button>
-                )}
-                <div className="login4">
-                    <p>Don't have an account? <Link to="/Signup">SignUp here</Link></p>
-                </div>
-            </form>
-        </div>
-                </>
-    );
+
+      <div className="login1">
+        <form onSubmit={handleSubmit} className="login2">
+        
+          <img src={Socialhire} alt="Logo" className="loginlogo" />
+
+            <h2>Login</h2>
+            <div className="login3">
+            <label>Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              {errors.email && <p className="error-message">{errors.email}</p>}
+            </div>
+            <div className="login3">
+              <label>Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              {errors.password && <p className="error-message">{errors.password}</p>}
+            </div>
+            <div className="forgotpassword1">
+              <label >
+               <Link to="/Forget">Forgot Password?</Link>
+              </label>
+            </div>
+            <br />
+            <div>
+              <button  type="submit" className="gro2">Login</button>
+            </div>
+            
+            <div className="login4">
+              <p>
+                Don't have an account? <Link to="/Signup">SignUp</Link>
+              </p>
+            </div>
+         
+        </form>
+      </div>
+   
+    </>
+  );
 };
 
 export default Login;

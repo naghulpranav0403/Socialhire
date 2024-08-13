@@ -1,126 +1,145 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './Signup.css';
-import {Link} from 'react-router-dom';
+import axios from 'axios';
 import Socialhire from './Socialhire1.png';
 import Navigation from './Navigation';
+
 const Signup = () => {
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [isValid, setIsValid] = useState(false);
-    const validateEmail = (email) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email) ? '' : 'Please enter a valid email address.';
-    };
+  
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate(); // Hook for navigation
 
-    const validatePassword = (password) => {
-        const minLength = 8;
-        const hasNumber = /\d/;
-        const hasUpperCase = /[A-Z]/;
-        const hasLowerCase = /[a-z]/;
-        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
 
-        if (password.length < minLength) {
-            return 'Password must be at least ${minLength} characters long.';
-        }
-        if (!hasNumber.test(password)) {
-            return 'Password must contain at least one number.';
-        }
-        if (!hasUpperCase.test(password)) {
-            return 'Password must contain at least one uppercase letter.';
-        }
-        if (!hasLowerCase.test(password)) {
-            return 'Password must contain at least one lowercase letter.';
-        }
-        if (!hasSpecialChar.test(password)) {
-            return 'Password must contain at least one special character.';
-        }
-        return '';
-    };
+  const validateEmail = (email) => {
+    return /\S+@\S+\.\S+/.test(email);
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const errors = {};
 
-        const emailValidationError = validateEmail(email);
-        const passwordValidationError = validatePassword(password);
-        const passwordsMatch = password === confirmPassword;
+    if (!formData.username.trim()) {
+      errors.username = 'Username is required';
+    }
+    if (!formData.email.trim() || !validateEmail(formData.email)) {
+      errors.email = 'Email is invalid';
+    }
+    if (!formData.password.trim() || formData.password.length < 6) {
+      errors.password = 'Password must be at least 6 characters long';
+    }
+    if (formData.password !== formData.confirmPassword) {
+      errors.confirmPassword = 'Passwords do not match';
+    }
 
-        if (!passwordsMatch) {
-            alert('Passwords do not match.');
-            return;
-        }
+    if (Object.keys(errors).length === 0) {
+      try {
+        await axios.post('http://localhost:2005/api/register', formData);
+        alert(`Signup Successful!\nEmail: ${formData.email}`);
+        
+        navigate('/Login'); // Assuming the login page is at the root path
+      } catch (error) {
+        if (error.response && error.response.data) {
+          const errorMessage = error.response.data.message;
 
-     
-        if (emailValidationError) {
-            alert(emailValidationError);
+          if (errorMessage === 'Email already exists') {
+            alert('Email already exists');
+          } else if (errorMessage === 'Username already exists') {
+            alert('Username already exists');
+          } else {
+            alert('An error occurred, please try again.');
+          }
         }
-        if (passwordValidationError) {
-            alert(passwordValidationError);
-        }
-        if (!emailValidationError && !passwordValidationError) {
-            setIsValid(true);
-        } else {
-            setIsValid(false);
-        }
-    };
+      }
+    }
 
-    return (
-        <>
-      <div className="nav-22">
+    setErrors(errors);
+  };
+
+  return (
+    <>
+    <div className="nav-22">
     <Navigation/>
       </div>
-        <div className="signup1">
-            <form onSubmit={handleSubmit} className="signup2">
-            <img src={Socialhire}  className="signuplogo" />
-                <h2>Sign Up</h2>
-                <div className="group1">
-                    <label><h4>Username :</h4></label>
-                    <input 
-                        type="text" 
-                        value={username} 
-                        onChange={(e) => setUsername(e.target.value)} 
-                        required 
-                    />
-                </div>
-                <div className="group1">
-                    <label><h4>Email :</h4></label>
-                    <input 
-                        type="email" 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)} 
-                        required 
-                        />
-                </div>
-                <div className="group1">
-                    <label><h4>Password :</h4></label>
-                    <input 
-                        type="password" 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)} 
-                        required 
-                    />
-                </div>
-                <div className="group1">
-                    <label><h4>Confirm Password :</h4></label>
-                    <input 
-                        type="password" 
-                        value={confirmPassword} 
-                        onChange={(e) => setConfirmPassword(e.target.value)} 
-                        required 
-                        />
-                </div>
-                {isValid ? (
-                    <Link to="/Home">
-                        <button className="group2" type="submit">Signup</button>
-                    </Link>
-                ) : (
-                    <button className="group2" type="submit">Signup</button>
-                )}
-            </form>
-        </div>
-                </>
-    );
+
+      
+      <div className="signup1">
+        <form onSubmit={handleSubmit} className="signup2">
+        <img src={Socialhire}  className="signuplogo" />
+          <div className="signup-form">
+            <h2>Sign up</h2>
+            <div className="group1">
+              <label>Username</label>
+              <input
+                type="text"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                required
+              />
+              {errors.username && <p className="error-message">{errors.username}</p>}
+            </div>
+            <div className="group1">
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+              {errors.email && <p className="error-message">{errors.email}</p>}
+            </div>
+            <div className="group1">
+              <label>Password</label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              {errors.password && <p className="error-message">{errors.password}</p>}
+            </div>
+            <div className="group1">
+              <label>Confirm Password</label>
+              <input
+                type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+              />
+              {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
+            </div>
+            
+            <div>
+              <button  className='group2' type="submit">Sign up</button>
+            </div>
+            
+            <div className="group3">
+              <p>
+                Already have an account? <Link to="/Login">Log in</Link>
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </>
+  );
 };
 
 export default Signup;
