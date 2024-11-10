@@ -169,3 +169,10 @@
 
  
 }
+ .com1{
+  display: flex;
+  align-items: flex-end;
+  margin-left: 570px;
+  justify-content: flex-end;
+  width: 20%;
+ }

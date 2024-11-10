@@ -66,6 +66,7 @@
 // export default Apply;
 import React, { useState } from 'react';
 import './Apply.css';
+import { useNavigate } from 'react-router-dom'; 
 import Socialhire from './Socialhire1.png';
 
 const Apply = () => {
@@ -77,7 +78,7 @@ const Apply = () => {
   const [employmentType, setEmploymentType] = useState('full-time');
   const [availableTime, setAvailableTime] = useState('');
   const [file, setFile] = useState(null);
-
+  const navigate = useNavigate();
   const handleSubmit = (e) => { 
     e.preventDefault();
     const fileName = file?.name || 'No file uploaded';
@@ -91,6 +92,7 @@ const Apply = () => {
     setEmploymentType('full-time');
     setAvailableTime('');
     setFile(null);
+    navigate('/')
   };
 
   return (

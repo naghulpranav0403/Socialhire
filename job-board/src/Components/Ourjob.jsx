@@ -14,8 +14,8 @@ const Ourjob = () => {
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        console.log('Fetching data from https://retoolapi.dev/G4kcIi/data');
-        const response = await axios.get('https://retoolapi.dev/G4kcIi/data');
+        console.log('Fetching data from https://retoolapi.dev/1ocjlp/data');
+        const response = await axios.get('https://retoolapi.dev/1ocjlp/data');
         console.log('API response data:', response.data);
         setJobsData(response.data);
       
@@ -36,6 +36,7 @@ const Ourjob = () => {
         console.error('Failed to fetch saved jobs:', error);
       }
     };
+  
     fetchPostJobs();
   }, []); 
  

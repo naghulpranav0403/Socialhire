@@ -31,7 +31,7 @@ const Login = ({ handleLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = {};
-
+    localStorage.setItem("Loggedin",true)
     if (!email.trim() || !/\S+@\S+\.\S+/.test(email)) {
       errors.email = 'Email is invalid';
     }
@@ -44,8 +44,8 @@ const Login = ({ handleLogin }) => {
       try {
         const response = await axios.post('http://localhost:2005/api/login', { email, password });
         alert('Login Successful!'); 
-        handleLogin(response.data.token); 
-      navigate('/Ourjob')
+        handleLogin(response.data); 
+        navigate('/Ourjob')
       } catch (error) {
         if (error.response) {
           const message = error.response.data.message;

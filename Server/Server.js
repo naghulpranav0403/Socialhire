@@ -68,12 +68,12 @@ app.post('/api/login', async (req, res) => {
     
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: 'User not found' }); // User not found
+      return res.status(400).json({ message: 'User not found' }); 
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' }); // Incorrect password
+      return res.status(400).json({ message: 'Invalid credentials' }); 
     }
 
     
@@ -107,6 +107,21 @@ app.post('/api/login', async (req, res) => {
         res.send('Failed to save job');
     }
  })
+ app.put('/update', async (req, res) => {
+  const { id, newCompany } = req.body;
+
+  try {
+    const updatedJob = await JobModel.findByIdAndUpdate(id, { COMPANY: newCompany } );
+
+    if (!updatedJob) {
+      return res.status(404).send('Job not found');
+    }
+
+    res.send('Job updated successfully');
+  } catch (error) {
+    res.status(500).send('Failed to update job');
+  }
+})
  app.delete('/delete/:id',async(req,res)=>{
     const id = req.params.id
     try{    

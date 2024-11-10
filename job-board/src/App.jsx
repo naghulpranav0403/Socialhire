@@ -30,6 +30,7 @@ function App() {
   const handleLogin = (email, password) => {
     const user = users.find((user) => user.email === email && user.password === password);
     return user ? true:false;
+    
 };
 
   return (
@@ -40,17 +41,16 @@ function App() {
             <Route path="/Home" element={<Home />} />
             <Route path="/Login" element={<Login handleLogin={handleLogin}/>} />
             <Route path="/Signup" element={<Signup handleSignIn={handleSignIn}/>} />
-             <Route path="/Ourjob" element={<Ourjob/>} />
+            <Route path="/Ourjob" element={<Ourjob/>} />
              <Route path="/Apply" element={<Apply />} /> 
              <Route path="/Navigation" element={<Navigation />} /> 
              <Route path="/Forget" element={<Forget/>} /> 
-        <Route path="/Savedjobs" element={<Savedjobs/>}/>
-             <Route path="/Postjob" element={<PostJob />} /> 
-       
+             <Route path="/Savedjobs" element={<Savedjobs/>}/>
+             <Route path="/Postjob" element={<PostJob />} />      
            </Route>
         </Routes>
       </BrowserRouter> 
-      
+    
     </>
   );
 }
